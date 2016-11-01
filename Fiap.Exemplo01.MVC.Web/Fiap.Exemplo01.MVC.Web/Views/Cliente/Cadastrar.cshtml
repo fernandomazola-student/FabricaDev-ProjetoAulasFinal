@@ -5,12 +5,7 @@
 
 <h2>Cadastro de Cliente</h2>
 
-@if (TempData["msg"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["msg"]
-    </div>
-}
+@Helper.Message(TempData["msg"] as string)
 
 @using (Html.BeginForm())
 {
@@ -28,7 +23,7 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(c => c.DataNascimento)
-        @Html.TextBoxFor(c => c.DataNascimento, new { @class = "form-control"})
+        @Html.TextBoxFor(c => c.DataNascimento, new { @class = "form-control" })
     </div>
     <div class="form-group">
         @Html.LabelFor(c => c.EstadoCivil)
@@ -40,6 +35,11 @@
         @Html.LabelFor(c => c.NecessidadesEspeciais)
     </div>
     <div class="form-group">
-        <input type="submit" value="Salvar" class="btn btn-primary" />
+        @Helper.Submit("Salvar", "btn btn-primary")
     </div>
+}
+
+@section scripts
+{
+    <!--<script.....></script.....>-->
 }
