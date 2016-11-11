@@ -10,40 +10,65 @@ namespace Fiap.Exemplo02.MVC.Web.UnitsOfWork
 {
     public class UnitOfWork : IDisposable
     {
+        #region Fields
+
         private PortalContext _context = new PortalContext();
 
-        private IGrupoRepository _grupoRepository;
+        private IGenericRepository<Grupo> _grupoRepository;
 
-        public IGrupoRepository GrupoRepository
+        private IGenericRepository<Aluno> _alunoRepository;
+
+        private IProfessorRepository _professorRepository;
+
+        #endregion
+
+        #region Gets
+
+        public IProfessorRepository ProfessorRepository
+        {
+            get
+            {
+                if (_professorRepository == null)
+                {
+                    _professorRepository = new ProfessorRepository(_context);
+                }
+                return _professorRepository;
+            }
+        }
+
+        public IGenericRepository<Grupo> GrupoRepository
         {
             get
             {
                 if (_grupoRepository == null)
                 {
-                    _grupoRepository = new GrupoRepository(_context);
+                    _grupoRepository = new GenericRepository<Grupo>(_context);
                 }
                 return _grupoRepository;
             }
         }
 
-        private IAlunoRepository _alunoRepository;
 
-        public IAlunoRepository AlunoRepository
+        public IGenericRepository<Aluno> AlunoRepository
         {
             get
             {
                 if (_alunoRepository == null)
                 {
-                    _alunoRepository = new AlunoRepository(_context);
+                    _alunoRepository = new GenericRepository<Aluno>(_context);
                 }
                 return _alunoRepository;
             }
         }
 
+        #endregion
+
         public void Salvar()
         {
             _context.SaveChanges();
         }
+
+        #region Dispose
 
         public void Dispose()
         {
@@ -53,5 +78,7 @@ namespace Fiap.Exemplo02.MVC.Web.UnitsOfWork
             }
             GC.SuppressFinalize(this);
         }
+
+        #endregion
     }
 }

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Fiap.Exemplo02.MVC.Web.Repositories
 {
-    public interface IGrupoRepository
+    public interface IProfessorRepository : IGenericRepository<Professor>
     {
-        ICollection<Grupo> Listar();
+        void Promocao(int id, decimal valor);
     }
 }
