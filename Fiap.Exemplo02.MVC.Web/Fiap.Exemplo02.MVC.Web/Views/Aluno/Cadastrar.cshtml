@@ -18,13 +18,8 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(a => a.DataNascimento)
-        @Html.TextBoxFor(a => a.DataNascimento, new { @class = "form-control" })
+        @Html.TextBoxFor(a => a.DataNascimento, "{0:dd/MM/yyyy}", new { @class = "form-control" })
         @Html.ValidationMessageFor(a => a.DataNascimento)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(a => a.Desconto)
-        @Html.TextBoxFor(a => a.Desconto, new { @class = "form-control" })
-        @Html.ValidationMessageFor(a => a.Desconto)
     </div>
     <div class="form-group">
         @Html.LabelFor(a => a.GrupoId)
@@ -38,7 +33,33 @@
         @Html.LabelFor(a => a.Bolsa)
     </div>
     <div class="form-group">
+        @Html.LabelFor(a => a.Desconto)
+        @Html.TextBoxFor(a => a.Desconto, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Desconto)
+    </div>
+    <div class="form-group">
         @Helper.Submit("Salvar","btn btn-primary")
     </div>
+}
+
+@section scripts{
+    <script>
+        $().ready(function () {
+            $("#DataNascimento").datepicker();
+
+            //Valida se o checkbox está marcado, se estiver exibe o desconto, caso contrário esconde
+            if ($("#Bolsa").attr("checked") == "checked") {
+                $("#Desconto").parent().css("display", "block");
+            } else {
+                $("#Desconto").parent().css("display", "none");
+            }
+            //Quando clicar no checkbox Bolsa
+            $("#Bolsa").click(function () {
+                //Esconde ou exibe a div que possui o campo desconto
+                $("#Desconto").parent().slideToggle();
+                $("#Desconto").focus();
+            });
+        });
+    </script>
 }
 

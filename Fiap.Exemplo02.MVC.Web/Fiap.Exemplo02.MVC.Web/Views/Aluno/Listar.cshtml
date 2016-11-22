@@ -8,7 +8,8 @@
 
 @Helper.Message(Model.Mensagem, "alert alert-success")
 
-@using (Html.BeginForm("Buscar", "Aluno", FormMethod.Get, new { @class = "form-inline" }))
+@using (Ajax.BeginForm("Buscar", null, 
+    new AjaxOptions { HttpMethod = "get", UpdateTargetId = "tabela", InsertionMode = InsertionMode.Replace }, new { @class = "form-inline" , id = "formularioBusca"}))
 {
     <div class="row">
         <div class="col-md-3">
@@ -34,23 +35,8 @@
             <th>Grupo</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var item in Model.Alunos)
-        {
-            <tr>
-                <td>@item.Nome</td>
-                <td>@item.DataNascimento</td>
-                <td>@(item.Bolsa?"Sim":"Não")</td>
-                <td>@item.Desconto</td>
-                <td>@item.Grupo.Nome</td>
-                <td>
-                    @Html.ActionLink("Editar","Editar", new { id = @item.Id }, new { @class = "btn btn-primary"})                    
-                    <button onclick="alunoId.value = @item.Id" type="button" class="btn btn-danger " data-toggle="modal" data-target="#myModal">
-                        Excluir
-                    </button>
-                </td>
-            </tr>
-        }
+    <tbody id="tabela">
+       @Html.Partial("_tabela",Model.Alunos)
     </tbody>
 </table>
 
@@ -77,3 +63,29 @@
     </div>
 </div>
 
+
+
+@section scripts{
+    <script>
+        function someBotao() {
+            //Esconder os botões de ações da tabela
+            $("td > button, td > a").css("visibility", "hidden");
+
+            //Quando o mouse passar por cima da linha, exibe os botões
+            $("tr").hover(function () {
+                $(this).find("button,a").css("visibility", "visible");
+            }, function () {
+                $(this).find("button,a").css("visibility", "hidden");
+            });
+        }
+        $().ready(function () {
+            someBotao();
+
+            //Selecionar o Select da busca de grupos
+            $("#IdBusca").change(function () {
+                //seleciona o formulário e faz o submit
+                $("#formularioBusca").submit();
+            });
+        });
+    </script>
+}
