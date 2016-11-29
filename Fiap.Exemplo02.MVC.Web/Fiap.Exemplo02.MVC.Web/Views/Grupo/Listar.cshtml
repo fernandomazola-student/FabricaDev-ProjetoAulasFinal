@@ -1,4 +1,4 @@
-﻿@model List<Fiap.Exemplo02.MVC.Web.Models.Grupo>
+﻿@model List<Fiap.Exemplo02.Dominio.Models.Grupo>
 @{
     ViewBag.Title = "Listar";
 }
@@ -50,10 +50,10 @@
                         </td>
                         
                         <td>
+                            @Html.ActionLink("Editar", "Editar", new { id = @item.Id }, new { @class = "btn btn-primary btn-sm" })
                             <button onclick="IDID.value=@item.Id" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
                                 Excluir
-                            </button>                       
-                            @Html.ActionLink("Alterar", "Alterar", new { id = @item.Id }, new { @class="btn btn-primary btn-sm" })
+                            </button>
                         </td>                       
 
                     </tr>
@@ -78,7 +78,7 @@
                 @using (Html.BeginForm("Excluir", "Grupo"))
                 {
                     <input type="hidden" id="IDID" name="id" />
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
                     @Helper.Submit("Excluir", "btn btn-danger btn-sm")
                 }
 

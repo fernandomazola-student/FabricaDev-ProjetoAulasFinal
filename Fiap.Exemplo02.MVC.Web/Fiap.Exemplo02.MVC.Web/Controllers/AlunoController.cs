@@ -1,4 +1,4 @@
-﻿using Fiap.Exemplo02.MVC.Web.Models;
+﻿using Fiap.Exemplo02.Dominio.Models;
 using Fiap.Exemplo02.MVC.Web.UnitsOfWork;
 using Fiap.Exemplo02.MVC.Web.ViewModels;
 using System;
@@ -19,6 +19,14 @@ namespace Fiap.Exemplo02.MVC.Web.Controllers
         #endregion
 
         #region GET
+
+        [HttpGet]
+        public ActionResult ValidarNome(string nome)
+        {
+            var aluno = _unit.AlunoRepository.BuscarPor(a => a.Nome == nome);
+            //Retorno um JSON {"existe" : true/false}
+            return Json( new {existe = aluno.Any() }, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
         public ActionResult Cadastrar(string msg)

@@ -13,7 +13,7 @@
 {
     <div class="form-group">
         @Html.LabelFor(a => a.Nome)
-        @Html.TextBoxFor(a => a.Nome, new { @class = "form-control"})
+        @Html.TextBoxFor(a => a.Nome, new { @class = "form-control" })
         @Html.ValidationMessageFor(a => a.Nome)
     </div>
     <div class="form-group">
@@ -23,9 +23,9 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(a => a.GrupoId)
-        @Html.DropDownListFor(a => a.GrupoId , 
-                Model.ListaGrupo, "Selecione" , 
-                new { @class = "form-control" } )
+        @Html.DropDownListFor(a => a.GrupoId,
+                Model.ListaGrupo, "Selecione",
+                new { @class = "form-control" })
         @Html.ValidationMessageFor(a => a.GrupoId)
     </div>
     <div class="form-group">
@@ -38,7 +38,27 @@
         @Html.ValidationMessageFor(a => a.Desconto)
     </div>
     <div class="form-group">
-        @Helper.Submit("Salvar","btn btn-primary")
+        @Html.LabelFor(a => a.Cep)
+        @Html.TextBoxFor(a => a.Cep, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Cep)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.Logradouro)
+        @Html.TextBoxFor(a => a.Logradouro, new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(a => a.Logradouro)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.Cidade)
+        @Html.TextBoxFor(a => a.Cidade, new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(a => a.Cidade)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.Numero)
+        @Html.TextBoxFor(a => a.Numero, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Numero)
+    </div>
+    <div class="form-group">
+        @Helper.Submit("Salvar", "btn btn-primary")
     </div>
 }
 
@@ -46,6 +66,36 @@
     <script>
         $().ready(function () {
             $("#DataNascimento").datepicker();
+
+            $("#Cep").blur(function () {
+                $.ajax({
+                    url: "http://api.postmon.com.br/v1/cep/" + $("#Cep").val(),
+                    method: "GET",
+                    success: function (data) {
+                        $("#Logradouro").val(data.logradouro);
+                        $("#Cidade").val(data.cidade);
+                    }
+                });
+            });
+
+            $("#Nome").blur(function () {
+                //Validação com ajax
+                $.ajax({
+                    url: "http://localhost:58692/Aluno/ValidarNome",
+                    method: "GET",
+                    data: { nome: $("#Nome").val() },
+                    success: function (data) {
+                        if (data.existe) {
+                            //alert("Nome já existe!");
+                            var erro = $("span[data-valmsg-for=Nome]");
+                            erro.addClass("field-validation-error").removeClass("field-validation-valid");
+                            erro.html("<span>Nome já cadastrado</span>");
+
+                        }
+                    }
+                });
+            });
+            //Fazer como exercicio, quando for cadastrar, não deixar cadastrar, validando-o
 
             //Valida se o checkbox está marcado, se estiver exibe o desconto, caso contrário esconde
             if ($("#Bolsa").attr("checked") == "checked") {
@@ -60,6 +110,7 @@
                 $("#Desconto").focus();
             });
         });
+
     </script>
 }
 

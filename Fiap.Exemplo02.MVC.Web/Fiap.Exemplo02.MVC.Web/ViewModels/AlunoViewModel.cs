@@ -1,4 +1,4 @@
-﻿using Fiap.Exemplo02.MVC.Web.Models;
+﻿using Fiap.Exemplo02.Dominio.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -33,6 +33,12 @@ namespace Fiap.Exemplo02.MVC.Web.ViewModels
         public bool Bolsa { get; set; }
         [Display(Name = "Grupo")]
         public int GrupoId { get; set; }
+
+        public string Cep { get; set; }
+        public string Logradouro { get; set; }
+        public string Cidade { get; set; }
+        public int Numero { get; set; }
+
         #endregion
     }
 }

@@ -1,0 +1,48 @@
+O que é uma API? 
+Imagine a seguinte situação. Existem dois softwares desenvolvidos por dois duas empresas diferentes e precisam se integrar. 
+Ex: Marketplace que faz desconto de estoque de uma outra loja. 
+Ex: Submarino que possui o site e o aplicativo , a api faz a comunicação entre os dois
+Maneira 1: Maneira errada, fazer o mesmo software para se comunicar com a mesma base
+
+API restful: disponibilizar UMA APLICAÇÃO PARA que um software possa ser manipulado.
+
+-Restrições de uma API ( O que precisa para ser uma api )
+	Client-Server:
+	Stateless: Imagine uma pessoa que acessa e armazena a sessao. No caso da api nós nao armazenamos o status do usuário. Deve ser stateless e não pode possuir controle de nada. Ou seja, conecta o cliente e nao controla a sessao, o que o cliente possui, quanto tempo esta. Facilitar comunicações entre varios servidores
+	Cacheable: Fazer com que uma consulta
+	Interface Uniforme: Como que aplicação B sabe qual metodos devem passar para aplicacao A. Quando formos criar um api restful, devemos saber as rotas, cadastrar etc. O formato que com eles vamos se comunicar, por exemplo, só JSON
+	Layered System: Se ela precisar ter uma manutenção um modulo apenas é o suficente para realizar a manutenção para que aplicacao nao fique fora do ar. 
+	
+-Niveis da API RESTfull
+	0: nao definiu, regras ou padrao. Que esta disponivel, faz o que tem que fazer, mas nao possui regras.
+	1: Define que cada metodo da sua api possui uma rota. Separacao de endpoints. Uma url definada para cada metodo da api
+	2: Uma rota só e os metodos do http dizem a ação que é. Utilizamos a mesma url, e mudamos o metodo do http, dependendo da ação que queremos utilizar na api
+	3: HATEOAS Define que conteudos sejam retornados separadamente
+-Autenticação/Autorização ( oque é cada uma e quando usar )
+	Como eu sei qual os dados que é do cliente sem ter uma sessao ? Apenas com token
+	Por exemplo um aplicativo, quando nos compramos a versao premium, como sabemos que ele é premiun? fazemos isso atraves do jwt, identificando qual autorização que ele tem no sistema, que é diferente de autenticação
+
+	JWT, padrao de mercado para como criar um token, e qual padrao seguir
+	Como funciona? O brwoser faz o login, passando usuario e senha, e valida verificando se esse usuario existe na base, se exister retorna  um token. E depois que retornou o token, em cada requisição que o client fizer, ele informa o token, autenticando e dando autorização
+
+	1: Tipo de algoritmo que estamos utilizando no jwt
+	2: 
+	3: Criptografa as outras duas chaves para que nao seja alterado
+
+	Base 64, da para criptar e descriptar um token
+	www.jwt.io
+
+	Reservad Claims
+	Iss: identificar o token, ou seja, de qual api ele esta vindo
+	exp: contador de tempo de expiração da api
+
+
+-API Gateway
+	Centralizador de requisicoes; 
+	Como funciona: Possuimos varios servidores então toda requsição é passa para o api gateway e ele identifica em qual servidor está a url. Além de centralizar url, ele centraliza logicas. Ex: Enviar email, podemos centralizar a logica nele toda vez que formos usar, não precisamos fazer novamente.
+
+Api gateway - KONG
+Docker
+
+	Swagger: Padrao para documentar API
+	editor.swagger.io
