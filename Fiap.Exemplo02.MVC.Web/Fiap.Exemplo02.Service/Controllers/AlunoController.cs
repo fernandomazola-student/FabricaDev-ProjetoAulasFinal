@@ -39,9 +39,6 @@ namespace Fiap.Exemplo02.Service.Controllers
             return _unit.AlunoRepository.BuscarPor(a => a.Nome == nome);
         }
 
-
-
-
         public IHttpActionResult Post(Aluno aluno)
         {
 
