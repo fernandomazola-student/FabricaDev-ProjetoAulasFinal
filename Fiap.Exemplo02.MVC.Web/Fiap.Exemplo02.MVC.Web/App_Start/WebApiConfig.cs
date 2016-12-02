@@ -9,6 +9,8 @@ namespace Fiap.Exemplo02.Service
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
+            
             // Web API configuration and services
             GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
