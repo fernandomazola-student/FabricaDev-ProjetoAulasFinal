@@ -5,6 +5,21 @@
 
 <h2>Lista dos melhores alunos</h2>
 
+<div>
+    <input type="text" id="Nome" name="Nome" placeholder="Nome" class="form-control" />
+</div>
+<div>
+    <input type="checkbox" name="Bolsa" id="Bolsa"/>
+</div>
+<div>
+    <input type="text" name="Desconto" placeholder="Desconto" id="Desconto" class="form-control"/>
+</div>
+<div>
+    <input type="date" name="DataNascimento" id="DataNascimento" class="form-control" />
+</div>
+<div>
+    <input type="submit" id="btnCadastrar" value="Cadastrar" class="btn btn-primary" />
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -14,29 +29,79 @@
             <th>Data de Nascimento</th>
         </tr>
     </thead>
-    <tbody>
-
-    </tbody>
+    <tbody></tbody>
 </table>
 
-<script>
-    $.ajax({
-        url: "http://localhost:58692/api/Aluno/",
-        method: "GET",
-        success: function (data) {
-            $.each(data, function (index, item) {
-                //Criar uma nova linha
-                var linha = $("<tr>");
-                linha.append($("<td>").text(item.nome));
-                linha.append($("<td>").text(item.bolsa));
-                linha.append($("<td>").text(item.desconto));
-                linha.append($("<td>").text(item.dataNascimento));
+@section scripts{
+    <script>
+        $().ready(function () {
+            listar();
+            function listar() {
+                $.ajax({
+                    url: "http://localhost:58692/api/Aluno/",
+                    method: "GET",
+                    success: function (data) {
+                        $("tbody").empty();
+                        $.each(data, function (index, item) {
+                            //Criar uma nova linha
+                            var linha = $("<tr>");
+                            linha.append($("<td>").text(item.Nome));
+                            linha.append($("<td>").text(item.Bolsa));
+                            linha.append($("<td>").text(item.Desconto));
+                            linha.append($("<td>").text(item.DataNascimento));
+                            var botao = $("<button>Deletar</button>").click(function(){
+                                deletar(item.Id);
+                            });
+                            linha.append(botao);
+                            $("tbody").append(linha);
+                        });
+                    }
+                });
+                //Regiao com javascript e o cadastro
+            }
+           
 
-                $("tbody").append(linha);
+            $("#btnCadastrar").click(function () {
+                $.ajax({
+                    url: "http://localhost:58692/api/Aluno/",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        Nome: $("#Nome").val(),
+                        Bolsa: $("#Bolsa").is(':checked'),
+                        Desconto: $("#Desconto").val(),
+                        DataNascimento: $("#DataNascimento").val(),
+                        GrupoId: 1,
+                    },
+                    success: function (data, statusString, xhr) {
+                        listar();
+                        alert("Sucesso!");
+                    },
+                    error: function (data, statusString, xhr) {
+                        alert("Erro!");
+                    }
+
+                });
             });
-        }
-    })
 
-    //Regiao com javascript e o cadastro
-    
-</script>
+
+            function deletar(id) {
+                $.ajax({
+                    url: "http://localhost:58692/api/Aluno/" + id,
+                    type: "DELETE",
+                    success: function (data, statusString, xhr) {
+                       
+                        alert("Sucesso!");
+                       location.reload();
+                    },
+                    error: function (data, statusString, xhr) {
+                        alert("Erro!");
+                    }
+
+                });
+            }
+
+
+        });
+    </script>
+}
