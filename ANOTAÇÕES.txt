@@ -46,3 +46,10 @@ Docker
 
 	Swagger: Padrao para documentar API
 	editor.swagger.io
+
+
+
+
+
+
+model é os atributos do usuario e o conext que manipula os dados, controller com as funcionadalides e tela
