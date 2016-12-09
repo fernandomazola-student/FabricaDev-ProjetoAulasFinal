@@ -33,7 +33,7 @@ namespace Fiap.Exemplo02.MVC.Web.ViewModels
         public bool Bolsa { get; set; }
         [Display(Name = "Grupo")]
         public int GrupoId { get; set; }
-
+      
         public string Cep { get; set; }
         public string Logradouro { get; set; }
         public string Cidade { get; set; }
